@@ -1,0 +1,15 @@
+# Has API keys hard-coded in lib/jev-client.js and README.md — keep out of the public repo
+# until they are removed (and rotated).
+/jev-vocab-enhancer/
+
+# Root-level copy of grok-chat-date-categorizer/ (identical files); the folder is the one tracked.
+/background.js
+/content.css
+/content.js
+/manifest.json
+/page-bridge.js
+/popup.css
+/popup.html
+/popup.js
+/README.md
+/icons/

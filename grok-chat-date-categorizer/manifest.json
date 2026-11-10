@@ -1,0 +1,64 @@
+{
+  "manifest_version": 3,
+  "name": "Grok Chat Date Categorizer & Separator",
+  "version": "1.0.0",
+  "description": "Automatically categorizes and separates your Grok chats by date (Pinned, Today, Yesterday, Previous 7 Days, Older) with collapsible groups and search.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://grok.com/*",
+    "https://*.x.ai/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://grok.com/*",
+        "https://*.x.ai/*"
+      ],
+      "js": ["page-bridge.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://grok.com/*",
+        "https://*.x.ai/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "page-bridge.js",
+        "icons/*.png"
+      ],
+      "matches": [
+        "https://grok.com/*",
+        "https://*.x.ai/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Grok Chat Date Categorizer"
+  }
+}

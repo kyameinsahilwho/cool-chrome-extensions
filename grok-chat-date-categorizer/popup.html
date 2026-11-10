@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grok Chat Date Categorizer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="popup-header">
+      <div class="header-left">
+        <img src="icons/icon32.png" alt="Logo" class="logo">
+        <div>
+          <h1 class="title">Grok Date Categorizer</h1>
+          <span class="subtitle">Chat History Organization</span>
+        </div>
+      </div>
+      <span class="status-indicator active">Active</span>
+    </header>
+
+    <!-- Main Content -->
+    <main class="popup-content">
+      <!-- Sorting / Grouping criteria -->
+      <div class="setting-item column">
+        <div class="setting-info">
+          <span class="setting-label">Date Criteria</span>
+          <span class="setting-desc">Choose which timestamp to group chats by</span>
+        </div>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="dateSortMode" value="modifyTime" id="modeModify" checked>
+            <span class="radio-custom"></span>
+            <div class="radio-text">
+              <span class="radio-title">Last Active Date</span>
+              <span class="radio-subtitle">When the last message occurred</span>
+            </div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="dateSortMode" value="createTime" id="modeCreate">
+            <span class="radio-custom"></span>
+            <div class="radio-text">
+              <span class="radio-title">Creation Date</span>
+              <span class="radio-subtitle">When the chat was first created</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Show Count Badges -->
+      <div class="setting-item">
+        <div class="setting-info">
+          <span class="setting-label">Show Count Badges</span>
+          <span class="setting-desc">Display number of chats in each group</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="showBadgesToggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Chat Stats -->
+      <div class="stats-card">
+        <div class="stat-box">
+          <span class="stat-value" id="totalChatsCount">-</span>
+          <span class="stat-label">Total Chats</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value" id="todayChatsCount">-</span>
+          <span class="stat-label">Today</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value" id="weekChatsCount">-</span>
+          <span class="stat-label">Past 7 Days</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions-group">
+        <button type="button" class="btn btn-secondary" id="syncBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          <span id="syncBtnText">Sync Chats Now</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="popup-footer">
+      <span class="footer-tip">Organized by date &amp; day</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

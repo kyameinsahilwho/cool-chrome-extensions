@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Tab</title>
+  <link rel="icon" href="icons/icon32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-mode="days">
+  <canvas id="scene" aria-hidden="true"></canvas>
+
+  <main class="stage">
+    <div class="count" aria-hidden="true">
+      <span class="ato" lang="ja">あと</span>
+      <div class="flaps" id="days"></div>
+      <span class="unit" lang="ja">日</span>
+    </div>
+
+    <div class="count-small" id="small" hidden aria-hidden="true">
+      <div class="grp grp-hour"><div class="flaps" id="hours"></div><span class="unit-sm" lang="ja">時間</span></div>
+      <div class="grp grp-min"><div class="flaps" id="minutes"></div><span class="unit-sm" lang="ja">分</span></div>
+      <div class="grp grp-sec"><div class="flaps" id="seconds"></div><span class="unit-sm" lang="ja">秒</span></div>
+    </div>
+
+    <p class="caption" id="caption" aria-live="polite"></p>
+    <button class="cta" id="cta" type="button" hidden>Set a new date</button>
+  </main>
+
+  <button class="settings-btn" id="openSettings" type="button" aria-label="Edit countdown" title="Edit countdown">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+      <path d="M4 7h9M19 7h1M4 17h3M13 17h7"/>
+      <circle cx="16" cy="7" r="2.4"/>
+      <circle cx="10" cy="17" r="2.4"/>
+    </svg>
+  </button>
+
+  <dialog class="sheet" id="settings" aria-labelledby="sheetTitle">
+    <form id="form" novalidate>
+      <h2 id="sheetTitle">Your countdown</h2>
+
+      <label class="field">
+        <span class="label">Counting down to</span>
+        <input id="f-name" type="text" maxlength="60" autocomplete="off" placeholder="Kyoto trip, exams, a birthday">
+      </label>
+
+      <div class="field-row">
+        <label class="field">
+          <span class="label">Date</span>
+          <input id="f-date" type="date" required>
+        </label>
+        <label class="field">
+          <span class="label">Time <span class="opt">optional</span></span>
+          <input id="f-time" type="time">
+        </label>
+      </div>
+
+      <fieldset class="field">
+        <legend class="label">Show</legend>
+        <div class="seg">
+          <label><input type="radio" name="mode" value="days"><span>Days</span></label>
+          <label><input type="radio" name="mode" value="hours"><span>Days and hours</span></label>
+          <label><input type="radio" name="mode" value="full"><span>To the second</span></label>
+        </div>
+      </fieldset>
+
+      <label class="field">
+        <span class="label">Background</span>
+        <select id="f-scene">
+          <option value="auto">Follows the time of day</option>
+          <option value="loop">Loops through a whole day in 5 minutes</option>
+          <option value="morning">Morning</option>
+          <option value="afternoon">Afternoon</option>
+          <option value="evening">Evening</option>
+          <option value="night">Night</option>
+        </select>
+      </label>
+
+      <label class="check">
+        <input id="f-petals" type="checkbox">
+        <span>Falling petals</span>
+      </label>
+
+      <p class="error" id="f-error" role="alert"></p>
+
+      <div class="actions">
+        <button type="button" class="btn ghost" id="cancel">Cancel</button>
+        <button type="submit" class="btn primary" id="save">Start countdown</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="scene.js"></script>
+  <script src="countdown.js"></script>
+</body>
+</html>
