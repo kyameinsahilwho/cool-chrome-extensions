@@ -1,54 +1,90 @@
-# Grok Chat Date Categorizer & Separator (Chrome Extension)
+# Grok Chat Date Categorizer
 
-An ultra-clean, high-performance Chrome Extension (Manifest V3) that organizes and separates your Grok (xAI) chats by date in the sidebar, matching Grok's native UI and design language.
+**Grok Chat Date Categorizer is a free Chrome extension that sorts the chat history in the Grok (xAI) sidebar under one header per day, such as "20 Mar, Friday (Today)", while keeping your pinned chats at the top.**
 
-## ✨ Features
+<p align="center">
+  <img alt="Chrome Manifest V3" src="https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white">
+  <img alt="Vanilla JavaScript" src="https://img.shields.io/badge/JavaScript-vanilla-F7DF1E?logo=javascript&logoColor=black">
+  <img alt="Runs on grok.com" src="https://img.shields.io/badge/runs%20on-grok.com-111111">
+</p>
 
-- 📅 **Day-by-Day Date Grouping**: Categorizes every single day individually formatted as `(date, day)`:
-  - e.g. `20 Mar, Friday (Today)`
-  - e.g. `19 Mar, Thursday (Yesterday)`
-  - e.g. `18 Mar, Wednesday`, `17 Mar, Tuesday`, etc.
-- 📌 **Native Pinned Chats**: Pinned chats stay pinned at the top without any "Pinned" title or header clutter, preserving their original order and pin icon.
-- 👁️ **Always Visible**: Clean, distraction-free sections that stay permanently visible (non-collapsible).
-- 📁 **Project Isolation**: Project chats (e.g. from the Projects section) are kept isolated and excluded from standard chat history.
-- ⚡ **Native Look & Feel**: Built with Grok's exact typography, colors, dark/light theme support, and sleek hover effects.
-- 🎯 **Full Native Compatibility**:
-  - Clicking any chat navigates using Grok's native client router without full page reloads.
-  - Pinning, unpinning, and options menus work directly with Grok's native backend.
-  - Tooltip on hover reveals the exact timestamp.
-- ⚙️ **Popup Controls**:
-  - Master toggle switch to enable/disable categorization anytime.
-  - Switch sorting criteria between **Last Active Date** (`modifyTime`) and **Creation Date** (`createTime`).
-  - Toggle chat count badges.
-  - "Sync Chats Now" button to manually pull latest conversation metadata.
-  - Real-time chat statistics (Total, Today, Past 7 Days).
+Grok's sidebar lists every chat in one long column. This extension splits it into days so you can find "the chat from last Tuesday" at a glance, and it uses Grok's own colour variables so it looks like part of Grok.
+
+## Why Grok Chat Date Categorizer
+
+- **One header per day.** Headers read like `20 Mar, Friday (Today)`, `19 Mar, Thursday (Yesterday)` and `18 Mar, Wednesday`. Older years add the year.
+- **Your whole history, not just what is on screen.** It reads Grok's own conversations API, 100 chats per page and up to 20 pages, then refreshes every 2 minutes and whenever you return to the tab.
+- **Pinned chats stay on top** in Grok's own order, without an extra "Pinned" header.
+- **Native controls.** Clicking a chat, pinning and the options menu all go through Grok's own buttons, so nothing about Grok's behaviour changes.
+- **Narrow permissions.** It only asks for `storage` and only runs on `grok.com` and `*.x.ai`.
+
+## Features
+
+**Sidebar**
+- Chats grouped by individual calendar day, newest day first, newest chat first inside each day.
+- Optional count badge on each day header.
+- Hover a chat to see its exact timestamp ("Active: ..." or "Created: ...").
+- Project chats are left out of the history list, so it only shows your regular chats.
+- Collapsing Grok's **Chats** section also hides the grouped view.
+
+**Popup**
+- **Date criteria**: group by **Last Active Date** (when the last message happened) or **Creation Date** (when the chat was started).
+- **Show Count Badges** toggle.
+- Live stats: total chats, chats today and chats in the past 7 days.
+- A **Sync Chats Now** button that refreshes the counts.
+
+## Install
+
+1. Download or clone [cool-chrome-extensions](https://github.com/kyameinsahilwho/cool-chrome-extensions).
+2. Open `chrome://extensions` and turn on **Developer mode** (top right).
+3. Click **Load unpacked** and select this `grok-chat-date-categorizer` folder.
+4. Open or refresh [grok.com](https://grok.com). Your sidebar chats are now grouped by day.
+
+## How it works and privacy
+
+- `page-bridge.js` runs in the page and watches Grok's `/rest/app-chat/conversations` responses. It also pages through that endpoint with your existing grok.com session to load older chats.
+- `content.js` merges what it receives with the chats in the sidebar, groups them by day and draws the grouped list in place of Grok's own list.
+- Only chat IDs, titles, timestamps and pin state are cached, in `chrome.storage.local` on your computer. Nothing is sent anywhere except grok.com itself.
+
+## Limits
+
+- The extension relies on Grok's sidebar layout (the **Chats** group). If Grok redesigns its sidebar, grouping may stop until the extension is updated.
+- A chat that appears in the sidebar before the API data arrives gets an approximate time for a moment, then moves to its correct day.
+
+## Files
+
+- `manifest.json`: Manifest V3 config, permissions, content scripts
+- `page-bridge.js`: main-world script that reads Grok's conversations API and handles navigation
+- `content.js`: sidebar detection, day grouping, rendering and the local cache
+- `content.css`: Grok-matching styles for headers, badges and rows
+- `background.js`: service worker that sets the default settings
+- `popup.html`, `popup.css`, `popup.js`: settings, stats and sync
+- `icons/`: icons at 16, 32, 48 and 128 px
+
+## FAQ
+
+### Is Grok Chat Date Categorizer free?
+
+Yes. It is free, needs no extra account and has no paid features. You only need your normal Grok login.
+
+### How do I organize Grok chats by date?
+
+Install this extension with **Load unpacked**, then refresh grok.com. The sidebar's chat list is replaced by one section per day.
+
+### Does it send my Grok chats anywhere?
+
+No. It only talks to grok.com, using the session you are already signed in with, and it caches chat titles and timestamps locally in Chrome. It never stores or sends the messages inside your chats; it only keeps chat IDs, titles, timestamps and pin state.
+
+### Can I group chats by the day they were created?
+
+Yes. Open the extension popup and choose **Creation Date** under Date criteria. The default is **Last Active Date**.
+
+### Why are some chats missing from the grouped list?
+
+Project chats are left out on purpose. If regular chats are missing, refresh grok.com so the extension can reload your history from Grok's API.
 
 ---
 
-## 🚀 How to Install in Chrome
+**Part of [CodingMarvel](https://codingmarvel.com).** More in this collection: [Himekuri Countdown](../himekuri-countdown) · [Item Numbers](../item-numbers) · [all Chrome extensions](https://github.com/kyameinsahilwho/cool-chrome-extensions)
 
-1. Open Google Chrome.
-2. In the URL address bar, navigate to:
-   ```text
-   chrome://extensions
-   ```
-3. Enable **Developer mode** using the toggle switch in the top-right corner.
-4. Click the **Load unpacked** button in the top-left corner.
-5. Select the extension directory:
-   ```text
-   d:\SKS coding\Chrome extensions
-   ```
-6. Open or refresh **[https://grok.com](https://grok.com)**.
-7. Your chats in the sidebar will now be neatly categorized by date!
-
----
-
-## 🛠️ File Structure
-
-- `manifest.json`: Manifest V3 configuration, permissions, content scripts, and assets.
-- `content.js`: Isolated world script handling DOM detection, date bucketing, UI rendering, and caching.
-- `content.css`: Native Grok matching styles for headers, badges, rows, and animations.
-- `page-bridge.js`: Main world script that intercepts Grok's conversations API and provides synchronization.
-- `background.js`: Service worker managing extension lifecycle and defaults.
-- `popup.html`, `popup.css`, `popup.js`: Extension popup UI for settings, live stats, and sync.
-- `icons/`: Extension icons in 16x16, 32x32, 48x48, and 128x128 formats.
+More from CodingMarvel: [Ehmatrix](https://ehmatrix.codingmarvel.com) · [Pollytasks](https://pollytasks.codingmarvel.com) · [HabitGrid](https://habitgrid.codingmarvel.com) · [Love for PDF](https://pdf.codingmarvel.com) · [Video Grid Maker](https://video-grid-maker.codingmarvel.com)
